@@ -1,22 +1,22 @@
 var choices = ['Rock', 'Paper', 'Scissors'];
 
-var userInput = 2;
+var playRound = function () {
+  // get users choice
+  var userInput = prompt('Please enter your play, 1: Rock, 2: Paper: 3: Scissors');
+  while (userInput < 1 && userInput > 3) {
+    userInput = prompt('Please enter your play, 1: Rock, 2: Paper: 3: Scissors');
+  }
+  var userSelection = choices[userInput - 1]
 
-/* 
-var userInput = prompt('Please enter your play, 1: Rock, 2: Paper: 3: Scissors');
+  //get computers choice
+  var computerSelection = choices[Math.floor(Math.random() * (2 - 0 + 1) + 0)]
 
-while (userInput < 1 && userInput > 3) {
-  userInput = prompt('Please enter your play, 1: Rock, 2: Paper: 3: Scissors');
-}
-*/
+  //log choices
+  console.log(`Your choice: ${userSelection} / Computers choice: ${computerSelection}`)
 
-var userSelection = choices[userInput - 1]
-
-var computerSelection = choices[Math.floor(Math.random() * (2 - 0 + 1) + 0)]
-
-var compare = function (choice1, choice2) {
-  choice1 = choices.indexOf(choice1);
-  choice2 = choices.indexOf(choice2);
+  //calculate winner
+  var choice1 = choices.indexOf(userSelection);
+  var choice2 = choices.indexOf(computerSelection);
   if (choice1 == choice2) {
     return "Tie!";
   }
@@ -33,4 +33,114 @@ var compare = function (choice1, choice2) {
   }
 }
 
-console.log(compare(userSelection,computerSelection))
+var playSingleGame = function () {
+  
+  //set scores to 0
+  let playerScore = 0;
+  let computerScore = 0;
+  let roundCount = 0;
+
+  do {
+    //run a round
+    var res = playRound();
+
+    //report winner
+    console.log(res)
+
+    // increase round count
+    roundCount++
+
+    //add scores based on winner of the round
+    if (res.startsWith("You")) {
+      playerScore++
+    } else if (res.startsWith("Computer")) {
+      computerScore++
+    } 
+
+    //report progress
+    console.log(`Round ${roundCount} - Your score: ${playerScore} / Computer score: ${computerScore}`)
+  } while ((playerScore + computerScore) < maxScore)
+  
+  if (playerScore > computerScore) {
+    console.log(`You win! You played ${roundCount} round${roundCount===1?"":"s"}. The final score was: ${playerScore} / ${computerScore} to you.`);
+    playAgain();
+    } else {
+    console.log(`You lost! You played ${roundCount} round${roundCount===1?"":"s"}. The final score was: ${computerScore} / ${playerScore} to the computer.`);
+    playAgain();
+  }
+
+}
+
+var playBestOfThree = function () {
+  
+  //set scores to 0
+  let playerScore = 1;
+  let computerScore = 0;
+  let roundCount = 0;
+
+  do {
+  //run a round
+  var res = playRound();
+
+  // increase round count
+  roundCount++
+
+  //report winner
+  console.log(res)
+
+  //add scores based on winner of the round
+  if (res.startsWith("You")) {
+    playerScore++
+  } else if (res.startsWith("Computer")) {
+    computerScore++
+  } 
+
+  //report progress
+  console.log(`Round ${roundCount} - Your score: ${playerScore} / Computer score: ${computerScore}`)
+
+  if (playerScore === 0 && computerScore === 2) {
+    break;
+  } else if (playerScore === 2 && computerScore === 0) {
+    break;
+  }
+
+  } while ((playerScore + computerScore) < maxScore);
+
+  if (playerScore > computerScore) {
+    console.log(`You win! You played ${roundCount} rounds. The final score was: ${playerScore} / ${computerScore} to you.`);
+    playAgain();
+    } else {
+    console.log(`You lost! You played ${roundCount} rounds. The final score was: ${computerScore} / ${playerScore} to the computer.`);
+    playAgain();
+  }
+}
+
+
+var playAgain = function () {
+  if(confirm('Do you want to play again ?')){
+    var gameMode = prompt("How many rounds would you like to play? Press '1' for a single game, or '2' for best out of 3.");
+    if (gameMode === '2') {
+      maxScore = 3;
+      playBestOfThree();
+    } else if (gameMode === '1') {
+      maxScore = 1
+      playSingleGame();
+    }
+  } else {
+    alert("Thanks for playing!")
+  }
+}
+
+//default settings and game start
+var maxScore = 1;
+var gameMode = prompt("How many rounds would you like to play? Press '1' for a single game, or '2' for best out of 3.");
+ if (gameMode === '2') {
+   maxScore = 3;
+   playBestOfThree();
+ } else if (gameMode === '1') {
+   playSingleGame();
+ }
+
+
+
+
