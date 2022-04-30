@@ -62,10 +62,10 @@ var playSingleGame = function () {
   } while ((playerScore + computerScore) < maxScore)
   
   if (playerScore > computerScore) {
-    console.log(`You win! You played ${roundCount} round${roundCount===1?"":"s"}. The final score was: ${playerScore} / ${computerScore} to you.`);
+    alert(`You win! You played ${roundCount} round${roundCount===1?"":"s"}. The final score was: ${playerScore} / ${computerScore} to you.`);
     playAgain();
     } else {
-    console.log(`You lost! You played ${roundCount} round${roundCount===1?"":"s"}. The final score was: ${computerScore} / ${playerScore} to the computer.`);
+    alert(`You lost! You played ${roundCount} round${roundCount===1?"":"s"}. The final score was: ${computerScore} / ${playerScore} to the computer.`);
     playAgain();
   }
 
@@ -74,7 +74,7 @@ var playSingleGame = function () {
 var playBestOfThree = function () {
   
   //set scores to 0
-  let playerScore = 1;
+  let playerScore = 0;
   let computerScore = 0;
   let roundCount = 0;
 
@@ -96,7 +96,7 @@ var playBestOfThree = function () {
   } 
 
   //report progress
-  console.log(`Round ${roundCount} - Your score: ${playerScore} / Computer score: ${computerScore}`)
+  alert(`Round ${roundCount} - Your score: ${playerScore} / Computer score: ${computerScore}`)
 
   if (playerScore === 0 && computerScore === 2) {
     break;
@@ -107,10 +107,10 @@ var playBestOfThree = function () {
   } while ((playerScore + computerScore) < maxScore);
 
   if (playerScore > computerScore) {
-    console.log(`You win! You played ${roundCount} rounds. The final score was: ${playerScore} / ${computerScore} to you.`);
+    alert(`You win! You played ${roundCount} rounds. The final score was: ${playerScore} / ${computerScore} to you.`);
     playAgain();
     } else {
-    console.log(`You lost! You played ${roundCount} rounds. The final score was: ${computerScore} / ${playerScore} to the computer.`);
+    alert(`You lost! You played ${roundCount} rounds. The final score was: ${computerScore} / ${playerScore} to the computer.`);
     playAgain();
   }
 }
